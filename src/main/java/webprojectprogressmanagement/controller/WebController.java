@@ -1,45 +1,36 @@
 package webprojectprogressmanagement.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import webprojectprogressmanagement.models.Role;
+import webprojectprogressmanagement.service.servicesimpl.RoleInfoService;
+import webprojectprogressmanagement.service.servicesimpl.UserService;
 
 @Controller
 public class WebController {
-
-	private static final Logger log = LogManager.getLogger(WebController.class);
-	/*
-	 * @Autowired EmailTrigger emailTrigger;
-	 */
-	@Value("${spring.application.name}")
-	String appName;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String webSearchEngineStartUp(Model model) {
-		if (log.isDebugEnabled())
-			log.debug("Executing web controller...");
+	@Autowired
+	UserService UserService;
 	
-		model.addAttribute("appName", appName);
-		try {
-			
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "user", "password");
-			
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		return "Main";
-	}
+	@Autowired
+	RoleInfoService roleinfoService;
 
+	@RequestMapping("/")
+	public String home(Map<String, Object> model) {
+		model.put("message", "rajwinder Reader !!");
+		List<Role> roles = roleinfoService.findAllRoles();
+		model.put("roles", roles);
+		return "Manager";
+	}
+	
+	@RequestMapping("/next")
+	public String next(Map<String, Object> model) {
+		model.put("message", "You are in new page !!");
+		return "next";
+	}
 
 }

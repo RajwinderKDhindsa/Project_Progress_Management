@@ -1,12 +1,47 @@
 package webprojectprogressmanagement.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Teaminfo")
 public class Team {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int teamId;
+	
+	
+	@Column(name = "projectID")
 	private int projectId;
+	
+	@Column(name = "memberId")
 	private int memberId;
+	
+	@Column(name = "memberRoleId")
 	private int memberRoleId;
+	
+	
+	@Column(name = "memberName")
 	private String memberName;
+	
+	public Team() {
+		
+	}
+	
+
+	public Team(int teamId, int projectId, int memberId, int memberRoleId, String memberName) {
+		this.teamId = teamId;
+		this.projectId = projectId;
+		this.memberId = memberId;
+		this.memberRoleId = memberRoleId;
+		this.memberName = memberName;
+	}
 
 	public int getTeamId() {
 		return teamId;

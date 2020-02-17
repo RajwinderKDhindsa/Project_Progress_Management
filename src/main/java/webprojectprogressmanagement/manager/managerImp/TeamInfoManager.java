@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import webprojectprogressmanagement.manager.ITeamInfoManager;
 import webprojectprogressmanagement.models.Team;
+import webprojectprogressmanagement.models.User;
 import webprojectprogressmanagement.utils.DataConnectionUtility;
 import webprojectprogressmanagement.utils.ProjectContants;
 
@@ -72,6 +75,18 @@ public class TeamInfoManager implements ITeamInfoManager {
 		return false;
 	}
 
+	public List<User> getAllManager() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		System.out.println("Start getAllEmployees.");
+		List<User> emps = new ArrayList<User>();
+		Connection con = DataConnectionUtility.getInstance().getConnection();
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(ProjectContants.ALL_EMPLOYEES);
+		while (rs.next())
+			emps.add((User) rs);
+		
+		return emps;
+	}
+	
 	public void allTeamMembers() throws SQLException, IllegalAccessException, IOException, ClassNotFoundException {
 		System.out.println("all employees");
 		Connection con = DataConnectionUtility.getInstance().getConnection();
