@@ -23,6 +23,6 @@ public class ProjectContants {
 	/*
 	 * Employee Table Queries
 	 */
-	public static String ALL_EMPLOYEES = "SELECT * FROM emp";
+	public static String ALL_EMPLOYEES = "SELECT * FROM TeamInfo ";
 	public static String INSERT_EMPLOYEE = "INSERT INTO emp VALUES (?,?,?,?)";
 }

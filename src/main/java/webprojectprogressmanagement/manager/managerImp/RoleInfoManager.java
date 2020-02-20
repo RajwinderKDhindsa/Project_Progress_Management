@@ -7,8 +7,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
 import webprojectprogressmanagement.manager.IRoleInfoManager;

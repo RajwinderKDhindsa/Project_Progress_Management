@@ -1,4 +1,4 @@
-package webprojectprogressmanagement.service.serviceImpl;
+package webprojectprogressmanagement.service.servicesimpl;
 
 import java.util.List;
 

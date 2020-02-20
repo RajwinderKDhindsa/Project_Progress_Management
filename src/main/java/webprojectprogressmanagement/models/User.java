@@ -8,28 +8,36 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "emp")
+@Table(name = "userdetails")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "userId")
 	private int id;
 
-	@Column(name = "age")
-	private int age;
+	@Column(name = "userName")
+	private String userName;
 
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "roleId")
+	private int roleId;
 
 	public User() {
 
 	}
 
-	public User(int id, int age, String name) {
+	public User(int id, String userName, String name, String password, int roleId) {
 		this.id = id;
-		this.age = age;
+		this.userName = userName;
 		this.name = name;
+		this.password = password;
+		this.roleId = roleId;
 	}
 
 	public int getId() {
@@ -40,12 +48,12 @@ public class User {
 		this.id = id;
 	}
 
-	public int getAge() {
-		return age;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getName() {
@@ -56,8 +64,20 @@ public class User {
 		this.name = name;
 	}
 
-	@Override
-    public String toString() {
-        return "Emp [id=" + id + ", firstName=" + name + ", Age=" + age + "]";
-    }
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
 }
