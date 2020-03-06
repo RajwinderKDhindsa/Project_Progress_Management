@@ -12,4 +12,6 @@ public interface IProjectInfoManager {
 
 	List<String> getProjectNameList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+
+	void addProject(String projectName, String projectDesc);
 }

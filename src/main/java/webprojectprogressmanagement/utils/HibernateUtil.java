@@ -19,12 +19,13 @@ import webprojectprogressmanagement.models.User;
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
+	private static ServiceRegistry serviceRegistry;
 
 	public static SessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
 			try {
-				Configuration configuration = new Configuration();
-				// Hibernate settings equivalent to hibernate.cfg.xml's properties
+				Configuration configuration = new Configuration(); // Hibernate settings equivalent to
+																	// hibernate.cfg.xml's properties
 				Properties settings = new Properties();
 				settings.put(Environment.DRIVER, ProjectContants.DB_DRIVER);
 				settings.put(Environment.URL, ProjectContants.DB_URL);
@@ -42,9 +43,8 @@ public class HibernateUtil {
 				configuration.addAnnotatedClass(SubTasks.class);
 				configuration.addAnnotatedClass(Login.class);
 				configuration.addAnnotatedClass(Issues.class);
-
-				ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-						.applySettings(configuration.getProperties()).build();
+				serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties())
+						.build();
 				sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -52,4 +52,11 @@ public class HibernateUtil {
 		}
 		return sessionFactory;
 	}
+
+	public static void shutdown() {
+		if (serviceRegistry != null) {
+			StandardServiceRegistryBuilder.destroy(serviceRegistry);
+		}
+	}
+
 }

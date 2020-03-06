@@ -1,8 +1,8 @@
 package webprojectprogressmanagement.service.servicesimpl;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,13 +14,13 @@ import webprojectprogressmanagement.models.User;
 import webprojectprogressmanagement.service.IUserService;
 
 @Service
-@Transactional
-public class UserService implements IUserService{
+
+public class UserService implements IUserService {
 	private static final Logger log = LogManager.getLogger(UserService.class);
 
 	@Autowired
-	UserManager UserManager;
-	
+	UserManager userManager;
+
 	@Override
 	public User findById(int id) {
 		// TODO Auto-generated method stub
@@ -29,8 +29,27 @@ public class UserService implements IUserService{
 
 	@Override
 	public List<User> findAllUsers() {
-		
-		
-		return UserManager.getUsers();
+
+		return userManager.getUsers();
 	}
+
+	@Override
+	public User getManagerDetails() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+
+		return userManager.getManagerOnly();
+	}
+
+	@Override
+	public List<User> getTeamLeadDetails()
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+
+		return userManager.getTeamLeadList();
+	}
+
+	@Override
+	public void addTeamLead(String teamLeadName, String emailAddress) {
+		userManager.addNewTeamLead(teamLeadName, emailAddress);
+		
+	}
+
 }

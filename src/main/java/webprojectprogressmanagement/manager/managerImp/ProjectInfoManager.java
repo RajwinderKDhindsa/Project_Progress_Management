@@ -11,24 +11,19 @@ import javax.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.IProjectInfoManager;
 import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.utils.HibernateUtil;
 
-@Component
+@Repository
 public class ProjectInfoManager implements IProjectInfoManager {
 
 	private static final Logger log = LogManager.getLogger(ProjectInfoManager.class);
 
 	public static ProjectInfoManager projectInfoManager = null;
-
-	private ProjectInfoManager() {
-
-	}
 
 	public static ProjectInfoManager getInstance() {
 		synchronized (ProjectInfoManager.class) {
@@ -43,24 +38,25 @@ public class ProjectInfoManager implements IProjectInfoManager {
 	@Override
 	public List<Projects> getProjectList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-		Transaction transaction = null;
+		Session session = null;
 		List<Projects> projectsList = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Projects> query = builder.createQuery(Projects.class);
 			Root<Projects> root = query.from(Projects.class);
-			// query.select(root).where(builder.equal(root.get("memberRoleId"), 2));
 			query.select(root);
 			Query<Projects> q = session.createQuery(query);
 			projectsList = q.getResultList();
-			transaction.commit();
 			return projectsList;
 		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
-			if (transaction != null) {
-				transaction.rollback();
+		} finally {
+			if (session != null) {
+				session.close();
 			}
 		}
 		return projectsList;
@@ -69,26 +65,53 @@ public class ProjectInfoManager implements IProjectInfoManager {
 	@Override
 	public List<String> getProjectNameList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-		Transaction transaction = null;
+		Session session = null;
 		List<String> projectsList = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<String> query = builder.createQuery(String.class);
 			Root<Projects> root = query.from(Projects.class);
 			query.select(root.get("projectName"));
 			Query<String> q = session.createQuery(query);
 			projectsList = q.getResultList();
-			transaction.commit();
 			return projectsList;
 		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
-			if (transaction != null) {
-				transaction.rollback();
+		} finally {
+			if (session != null) {
+				session.close();
 			}
 		}
 		return projectsList;
 	}
+
+
+
+	@Override
+	public void addProject(String projectName, String projectDesc) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			Projects newProject = new Projects();
+			newProject.setProjectDesc(projectDesc);
+			newProject.setProjectName(projectName);
+			newProject.setProjectStatus("Pending");
+			session.save(newProject);
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
+
 
 }

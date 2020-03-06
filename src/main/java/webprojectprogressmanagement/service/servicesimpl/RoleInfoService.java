@@ -2,8 +2,6 @@ package webprojectprogressmanagement.service.servicesimpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import webprojectprogressmanagement.models.Role;
 import webprojectprogressmanagement.service.IRoleInfoService;
 
 @Service
-@Transactional
+
 public class RoleInfoService implements IRoleInfoService{
 	private static final Logger log = LogManager.getLogger(RoleInfoService.class);
 

@@ -1,36 +1,104 @@
 <!DOCTYPE html>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker();
+	});
+</script>
+
+</head>
 <body>
 	<div align="center">
-		<form:form action="/assignProject" method="post"
-			commandName="projectInfoForm">
+
+		<h1>Manager</h1>
+		<h2>Hello ${message}${managerDetails.name}</h2>
+		<form method="post" action="assignProject">
 			<table border="0">
 				<tr>
 					<td colspan="2" align="center"><h2>Assign the Project to
 							Team Lead</h2></td>
 				</tr>
 				<tr>
-					<td>Project List:</td>
-					<td><form:select path="country">
-							<form:options items="${projectList}" />
-						</form:select></td>
-					</td><td>
-					<form:select path="country" items="${projectList}" multiple="true" />
-					</td>
+					<td>Project:</td>
+					<td><select id="projectName" name="projectName">
+							<option value="">Select Project</option>
+							<c:forEach items="${projectList}" var="project">
+								<option value="${project.projectId}">${project.projectName}</option>
+							</c:forEach>
+					</select></td>
 				</tr>
 				<tr>
 					<td>Lead List:</td>
-					<td><form:select path="leadList" items="${leadList}" /></td>
+					<td><select id="lead" name="TeamLeadDetails">
+							<option value="">Select Team Lead</option>
+							<c:forEach items="${leadList}" var="lead">
+								<option value="${lead.roleId},${lead.name}">${lead.name}</option>
+							</c:forEach>
+					</select></td>
+					<td>
 				</tr>
+				<tr>
+					<td>DeadLine</td>
+					<td><input type="text" name="deadlineDate" id="datepicker"></td>
+				</tr>
+
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="Assign" /></td>
 				</tr>
 			</table>
-		</form:form>
-		<table border="0">
+		</form>
+		<form method="post" action="addProject">
+			<table border="0">
+				<tr>
+					<td colspan="2" align="center"><h2>Add New Project</h2></td>
+				</tr>
+				<tr>
+					<td>Project Name:</td>
+					<td><input type="text" name="projectName"></td>
+				</tr>
+				<tr>
+					<td>Project Description</td>
+					<td><input type="textarea" name="projectDesc"></td>
+					<td>
+				</tr>
+
+				<tr>
+					<td colspan="2" align="center"><input type="submit"
+						value="Add New Project" /></td>
+				</tr>
+			</table>
+		</form>
+		<form method="post" action="addNewTeamLead">
+			<table border="0">
+				<tr>
+					<td colspan="2" align="center"><h2>Add New Team Lead</h2></td>
+				</tr>
+				<tr>
+					<td>Team Lead Name:</td>
+					<td><input type="text" name="teamLeadName"></td>
+				</tr>
+				<tr>
+					<td>Email Address:</td>
+					<td><input type="email" name="email"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="submit"
+						value="Add New Team Lead" /></td>
+				</tr>
+			</table>
+		</form>
+		<table>
 			<tr bgcolor="blue">
 				<td colspan="2"><font color="white"> Project List </font></td>
 			</tr>
@@ -52,58 +120,4 @@
 		</table>
 	</div>
 </body>
-<%-- <body>
-	<div>
-		<div>
-			<h1>Manager</h1>
-			<h2>Hello ${message}${managerDetails.name}</h2>
-			<form action="/createNewProject" method="post">
-				Project Name :<br> <input type="text" name="newProject"> <br>
-				<br> <input type="submit" value="Create New Project">
-			</form>
-
-
-			<form action="/form" method="post">
-
-				<select NAME="Lead" SIZE="5" width="20">
-					<c:forEach var="project" items="${projectList}">
-						<option><font color="#00CC00"> <c:out
-									value="${project.projectName}" />
-							</font>
-						</option>
-					</c:forEach>
-				</select> <select NAME="Project" SIZE="5" width="20">
-					<c:forEach var="lead" items="${leadList}">
-						<option><font color="#00CC00"> <c:out
-									value="${lead.name}" />
-							</font>
-						</option>
-					</c:forEach>
-				</select> <input type="submit" value="Submit">
-			</form>
-			<table border="0">
-				<tr bgcolor="blue">
-					<td colspan="2"><font color="white"> Project List </font></td>
-				</tr>
-				<tr bgcolor="blue">
-					<td colspan="2"><font color="white"> Project ID </font></td>
-					<td colspan="2"><font color="white"> Project Name </font></td>
-					<td colspan="2"><font color="white"> Project
-							Description </font></td>
-					<td colspan="2"><font color="white"> Project Status </font></td>
-				</tr>
-				<c:forEach var="project" items="${projectList}">
-					<tr bgcolor="blue">
-						<td colspan="2"><c:out value="${project.projectId}" /></td>
-						<td colspan="2"><c:out value="${project.projectName}" /></td>
-						<td colspan="2"><c:out value="${project.projectDesc}" /></td>
-						<td colspan="2"><c:out value="${project.projectStatus}" /></td>
-					</tr>
-				</c:forEach>
-			</table>
-			Click on this <strong><a href="next">link</a></strong> to visit
-			another page.
-		</div>
-	</div>
-</body> --%>
 </html>

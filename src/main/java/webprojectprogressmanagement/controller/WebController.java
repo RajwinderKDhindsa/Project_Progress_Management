@@ -2,15 +2,18 @@ package webprojectprogressmanagement.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import webprojectprogressmanagement.models.Projects;
+import webprojectprogressmanagement.service.servicesimpl.ProjectService;
 import webprojectprogressmanagement.service.servicesimpl.RoleInfoService;
 import webprojectprogressmanagement.service.servicesimpl.TaskAssignment;
 import webprojectprogressmanagement.service.servicesimpl.UserService;
@@ -18,7 +21,10 @@ import webprojectprogressmanagement.service.servicesimpl.UserService;
 @Controller
 public class WebController {
 	@Autowired
-	UserService UserService;
+	ProjectService projectService;
+
+	@Autowired
+	UserService userService;
 
 	@Autowired
 	RoleInfoService roleinfoService;
@@ -32,31 +38,60 @@ public class WebController {
 		Projects projectInfoForm = new Projects();
 		model.put("projectInfoForm", projectInfoForm);
 		model.put("message", "Welcome Manager!!");
-		// List<Role> roles = roleinfoService.findAllRoles();
-		model.put("managerDetails", taskAssignment.getManagerDetails());
-		model.put("leadList", taskAssignment.getTeamLeadDetails());
-		model.put("projectNameList", taskAssignment.getProjectName());
-		model.put("projectList", taskAssignment.getProjectList());
+		model.put("managerDetails", userService.getManagerDetails());
+		model.put("leadList", userService.getTeamLeadDetails());
+		model.put("projectNameList", projectService.getProjectName());
+		model.put("projectList", projectService.getProjectList());
 		return "Manager";
 	}
 
-	@RequestMapping(value = "/assignProject", method = RequestMethod.POST)
-	public String processRegistration(@ModelAttribute("projectInfoForm") Projects projectInfo,
+	@PostMapping("/assignProject") // it only support port method
+	public String assignProject(@RequestParam("TeamLeadDetails") String teamLeadDetails,
+			@RequestParam("projectName") int projectId, @RequestParam("deadlineDate") Date deadLine,
 			Map<String, Object> model)
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+			throws ParseException, ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 
-		// implement your own registration logic here...
+		String[] leadDetails = teamLeadDetails.split(",");
+		taskAssignment.assignTask(projectId, Integer.valueOf(leadDetails[0]), leadDetails[1]);
+		model.put("message",
+				"Welcome Manager assign project!!            --- " + leadDetails[0] + " LeadName: " + leadDetails[1]);
+		model.put("managerDetails", userService.getManagerDetails());
+		model.put("leadList", userService.getTeamLeadDetails());
+		model.put("projectList", projectService.getProjectList());
 
-		// for testing purpose:
-		System.out.println("Status: " + projectInfo.getProjectStatus());
-		System.out.println("Desc: " + projectInfo.getProjectDesc());
-		model.put("message", "Welcome Manager assign project!!");
-		// List<Role> roles = roleinfoService.findAllRoles();
-		model.put("managerDetails", taskAssignment.getManagerDetails());
-		model.put("leadList", taskAssignment.getTeamLeadDetails());
-		model.put("projectList", taskAssignment.getProjectList());
+		return "next";
+	}
 
-		return "Manager";
+	@PostMapping("/addNewTeamLead")
+	public String addNewTeamLead(@RequestParam("teamLeadName") String teamLeadName,
+			@RequestParam("email") String email,
+			Map<String, Object> model)
+			throws ParseException, ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+
+		userService.addTeamLead(teamLeadName,email);
+		// taskAssignment.assignTask(projectId, Integer.valueOf(leadDetails[0]),
+		// leadDetails[1]);
+		model.put("message", "Welcome Manager assign project!!            --- LeadName: " + teamLeadName);
+		model.put("managerDetails", userService.getManagerDetails());
+		model.put("leadList", userService.getTeamLeadDetails());
+		model.put("projectList", projectService.getProjectList());
+
+		return "next";
+	}
+
+	@PostMapping("/addProject")
+	public String addProject(@RequestParam("projectName") String projectName,
+			@RequestParam("projectDesc") String projectDesc, Map<String, Object> model)
+			throws ParseException, ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+
+		projectService.addProject(projectName, projectDesc);
+		model.put("message",
+				"Welcome Manager assign project!!            --- " + projectName + " projectDesc: " + projectDesc);
+		model.put("managerDetails", userService.getManagerDetails());
+		model.put("leadList", userService.getTeamLeadDetails());
+		model.put("projectList", projectService.getProjectList());
+
+		return "next"; 
 	}
 
 }

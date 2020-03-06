@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "teaminfo")
+@Table(name = "AssignTask")
 public class Team {
 	
 	@Id
@@ -16,12 +16,11 @@ public class Team {
 	@Column(name = "teamId")
 	private int teamId;
 	
-	
 	@Column(name = "projectID")
 	private int projectId;
 	
-	@Column(name = "memberId")
-	private int memberId;
+	@Column(name = "status",nullable = false, columnDefinition =  "varchar(25) default 'Peding'")
+	private String status;
 	
 	@Column(name = "memberRoleId")
 	private int memberRoleId;
@@ -35,10 +34,10 @@ public class Team {
 	}
 	
 
-	public Team(int teamId, int projectId, int memberId, int memberRoleId, String memberName) {
+	public Team(int teamId, int projectId, String status, int memberRoleId, String memberName) {
 		this.teamId = teamId;
 		this.projectId = projectId;
-		this.memberId = memberId;
+		this.status = status;
 		this.memberRoleId = memberRoleId;
 		this.memberName = memberName;
 	}
@@ -59,13 +58,15 @@ public class Team {
 		this.projectId = projectId;
 	}
 
-	public int getMemberId() {
-		return memberId;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
 
 	public int getMemberRoleId() {
 		return memberRoleId;

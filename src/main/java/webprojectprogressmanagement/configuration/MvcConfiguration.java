@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("webprojectprogressmanagement")
+@ComponentScan("webprojectprogressmanagement.*")
 public class MvcConfiguration extends WebMvcConfigurerAdapter
 {
     @Override
