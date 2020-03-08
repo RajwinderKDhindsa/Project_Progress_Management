@@ -52,7 +52,7 @@ public class WebController {
 			throws ParseException, ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 
 		String[] leadDetails = teamLeadDetails.split(",");
-		taskAssignment.assignTask(projectId, Integer.valueOf(leadDetails[0]), leadDetails[1]);
+		taskAssignment.assignTaskToTeamLead(projectId, Integer.valueOf(leadDetails[0]), leadDetails[1]);
 		model.put("message",
 				"Welcome Manager assign project!!            --- " + leadDetails[0] + " LeadName: " + leadDetails[1]);
 		model.put("managerDetails", userService.getManagerDetails());

@@ -19,7 +19,7 @@ public class Team {
 	@Column(name = "projectID")
 	private int projectId;
 	
-	@Column(name = "status",nullable = false, columnDefinition =  "varchar(25) default 'Peding'")
+	@Column(name = "status",nullable = false, columnDefinition =  "varchar(25) default 'Pending'")
 	private String status;
 	
 	@Column(name = "memberRoleId")
