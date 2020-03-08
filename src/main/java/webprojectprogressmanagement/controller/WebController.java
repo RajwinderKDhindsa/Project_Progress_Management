@@ -16,6 +16,7 @@ import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.service.servicesimpl.ProjectService;
 import webprojectprogressmanagement.service.servicesimpl.RoleInfoService;
 import webprojectprogressmanagement.service.servicesimpl.TaskAssignment;
+import webprojectprogressmanagement.service.servicesimpl.TeamMemberService;
 import webprojectprogressmanagement.service.servicesimpl.UserService;
 
 @Controller
@@ -31,6 +32,9 @@ public class WebController {
 
 	@Autowired
 	TaskAssignment taskAssignment;
+	
+	@Autowired
+	TeamMemberService teamMember;
 
 	@RequestMapping("/")
 	public String home(Map<String, Object> model)
@@ -92,6 +96,16 @@ public class WebController {
 		model.put("projectList", projectService.getProjectList());
 
 		return "next"; 
+	}
+	
+	@RequestMapping(value = "/teamMember")
+	public String teamMember(Map<String, Object> model)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		model.put("message", "Welcome Team Member!");
+		// List<Role> roles = roleinfoService.findAllRoles();
+		model.put("teamMembers", teamMember.getTeamMember());
+
+		return "TeamMember";
 	}
 
 }

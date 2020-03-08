@@ -13,6 +13,7 @@ public interface ITeamInfoManager {
 	public Team getManager() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException ;
 	public List<Team> getTeamLeadList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
-	void assignTaskToTeamLead(int projectId, int leadDetails, String memberName);	
+	void assignTaskToTeamLead(int projectId, int leadDetails, String memberName);
+	
 	
 }
