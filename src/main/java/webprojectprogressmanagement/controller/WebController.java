@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import webprojectprogressmanagement.service.servicesimpl.RoleInfoService;
 import webprojectprogressmanagement.service.servicesimpl.TaskAssignment;
 import webprojectprogressmanagement.service.servicesimpl.TeamMemberService;
 import webprojectprogressmanagement.service.servicesimpl.UserService;
+import webprojectprogressmanagement.models.Team;
 
 @Controller
 public class WebController {
@@ -36,7 +38,7 @@ public class WebController {
 	@Autowired
 	TeamMemberService teamMember;
 
-	@RequestMapping("/")
+	@RequestMapping("/home")
 	public String home(Map<String, Object> model)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		Projects projectInfoForm = new Projects();
@@ -98,12 +100,21 @@ public class WebController {
 		return "next"; 
 	}
 	
-	@RequestMapping(value = "/teamMember")
+	@RequestMapping(value = "/")
 	public String teamMember(Map<String, Object> model)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		model.put("message", "Welcome Team Member!");
 		// List<Role> roles = roleinfoService.findAllRoles();
-		model.put("teamMembers", teamMember.getTeamMember());
+		List<Team> team = teamMember.getTeamMember();
+		model.put("teamMembers", team);
+		List<Team> leadManager = teamMember.getTeamLeadManager(team.get(0).getProjectId());
+		for (Team leads : leadManager) {
+		    if(leads.getMemberRoleId()==2) {
+		    	model.put("leader",leads.getMemberName());
+		    }else if(leads.getMemberRoleId()==1) {
+		    	model.put("manager",leads.getMemberName());
+		    }
+		}
 
 		return "TeamMember";
 	}

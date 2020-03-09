@@ -17,7 +17,7 @@ public class Team {
 	private int teamId;
 	
 	@Column(name = "projectID")
-	private int projectId;
+	private int projectID;
 	
 	@Column(name = "status",nullable = false, columnDefinition =  "varchar(25) default 'Pending'")
 	private String status;
@@ -36,7 +36,7 @@ public class Team {
 
 	public Team(int teamId, int projectId, String status, int memberRoleId, String memberName) {
 		this.teamId = teamId;
-		this.projectId = projectId;
+		this.projectID = projectId;
 		this.status = status;
 		this.memberRoleId = memberRoleId;
 		this.memberName = memberName;
@@ -51,11 +51,11 @@ public class Team {
 	}
 
 	public int getProjectId() {
-		return projectId;
+		return projectID;
 	}
 
 	public void setProjectId(int projectId) {
-		this.projectId = projectId;
+		this.projectID = projectId;
 	}
 
 	public String getStatus() {

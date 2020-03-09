@@ -13,11 +13,26 @@
 				<tr>
 			</table>
 		</form:form>
+		
+			<table border="0">
+			<tr bgcolor="blue">
+				<td colspan="2"><font color="white"> Lead </font></td>
+				<td colspan="2"><font color="white"> Manager </font></td>
+				
+			</tr>
+			
+				<tr bgcolor="blue">
+					<td colspan="2"><c:out value="${leader}" /></td>
+					<td colspan="2"><c:out value="${manager}" /></td>
+				</tr>
+			
+		</table>
+		
 		<table border="0">
 			<tr bgcolor="blue">
 				<td colspan="2"><font color="white"> Team Member List </font></td>
 			</tr>
-			<tr bgcolor="blue">
+			<tr bgcolor="grey">
 				<td colspan="2"><font color="white"> Team ID </font></td>
 				<td colspan="2"><font color="white"> Team Project ID </font></td>
 				<td colspan="2"><font color="white"> Team Member ID

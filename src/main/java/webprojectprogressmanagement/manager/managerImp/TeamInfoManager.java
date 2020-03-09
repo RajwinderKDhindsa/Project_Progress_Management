@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.ITeamInfoManager;
 import webprojectprogressmanagement.models.Team;
+import webprojectprogressmanagement.models.User;
 import webprojectprogressmanagement.utils.HibernateUtil;
 
 @Repository
@@ -148,4 +149,33 @@ public class TeamInfoManager implements ITeamInfoManager {
 		}
 
 	}
+
+	
+	public List<Team> getTeamLeadManager(Integer id) {
+		Session session = null;
+		List<Team> teamList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Team> query = builder.createQuery(Team.class);
+			Root<Team> root = query.from(Team.class);
+			query.select(root).where(builder.equal(root.get("projectID"), id));
+			Query<Team> q = session.createQuery(query);
+			teamList = q.getResultList();
+			System.out.println("Team Lead list Object : " + teamList);
+			return (List<Team>) teamList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return teamList;
+	}
+	
+	
 }
