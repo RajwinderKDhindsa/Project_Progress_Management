@@ -35,10 +35,9 @@ public class WebController {
 
 	@Autowired
 	TaskAssignment taskAssignment;
-	
+
 	@Autowired
 	TeamMemberService teamMember;
-
 
 	@Autowired
 	EmailService emailService;
@@ -74,6 +73,18 @@ public class WebController {
 			model.put("acceptedProjectList", projectService.getAcceptedProjectList());
 			return "TeamLead";
 		} else if (userService.checkUser(email, password) == 3) {
+			model.put("message", "Welcome Team Member!");
+			// List<Role> roles = roleinfoService.findAllRoles();
+			List<Team> team = teamMember.getTeamMember(3);
+			model.put("teamMembers", team);
+			List<Team> leadManager = teamMember.getTeamLeadManager(team.get(0).getProjectId());
+			for (Team leads : leadManager) {
+				if (leads.getMemberRoleId() == 2) {
+					model.put("leader", leads.getMemberName());
+				} else if (leads.getMemberRoleId() == 1) {
+					model.put("manager", leads.getMemberName());
+				}
+			}
 			return "TeamMember";
 		}
 		model.put("errorExit", true);
@@ -143,24 +154,7 @@ public class WebController {
 		model.put("projectList", projectService.getProjectList());
 		return "next";
 	}
-	
-	@RequestMapping(value = "/")
-	public String teamMember(Map<String, Object> model)
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-		model.put("message", "Welcome Team Member!");
-		// List<Role> roles = roleinfoService.findAllRoles();
-		List<Team> team = teamMember.getTeamMember();
-		model.put("teamMembers", team);
-		List<Team> leadManager = teamMember.getTeamLeadManager(team.get(0).getProjectId());
-		for (Team leads : leadManager) {
-		    if(leads.getMemberRoleId()==2) {
-		    	model.put("leader",leads.getMemberName());
-		    }else if(leads.getMemberRoleId()==1) {
-		    	model.put("manager",leads.getMemberName());
-		    }
-		}
 
-<<<<<<< .mine
 	@PostMapping("/addNewTeamMember")
 	public String addNewTeamMember(@RequestParam("name") String name, @RequestParam("email") String email,
 			@RequestParam("roleID") int roleId, Map<String, Object> model)
@@ -203,48 +197,5 @@ public class WebController {
 		model.put("projectList", projectService.getProjectList());
 		return "next";
 	}
-=======
-		return "TeamMember";
-	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
 }

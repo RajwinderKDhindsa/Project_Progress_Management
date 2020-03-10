@@ -18,8 +18,8 @@ public class TeamMemberService implements ITeamMemberService {
 	TeamInfoManager teamInfoManager;
 	
 	@Override
-	public List<Team> getTeamMember() throws IllegalAccessException, ClassNotFoundException, SQLException, IOException {
-		List<Team> team = teamInfoManager.getAllTeamMembers();
+	public List<Team> getTeamMember(int roleId) throws IllegalAccessException, ClassNotFoundException, SQLException, IOException {
+		List<Team> team = teamInfoManager.getAllTeamMembers(roleId);
 		return team;
 	}
 

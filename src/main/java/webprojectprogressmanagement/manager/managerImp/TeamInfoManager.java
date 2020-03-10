@@ -183,6 +183,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 		return false;
 	}
 
+	@Override
 	public List<Team> getTeamLeadManager(Integer id) {
 		Session session = null;
 		List<Team> teamList = null;
