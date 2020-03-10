@@ -4,24 +4,30 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#datepicker").datepicker();
+            });
+        </script>
 
-</head>
+    </head>
 <body>
 	<div align="center">
-
+		<%-- <div id="addEmployee">
+			<form method="post" action="saveDetails">
+				// saveDetails url mapping in EmployeeController Enter Employee Name
+				: <input type="text" name="employeeName" /> Enter Employee Email
+				Address: <input type="email" name="employeeEmail"> <input
+					type="submit" value="Submit">
+			</form>
+		</div> --%>
 		<h1>Manager</h1>
-		<h2>Hello ${message}</h2>
+		<h2>Hello ${message}${managerDetails.name}</h2>
 		<form method="post" action="assignProject">
 			<table border="0">
 				<tr>
@@ -42,59 +48,19 @@
 					<td><select id="lead" name="TeamLeadDetails">
 							<option value="">Select Team Lead</option>
 							<c:forEach items="${leadList}" var="lead">
-								<option value="${lead.id},${lead.roleId},${lead.name}">${lead.name}</option>
+								<option value="${lead.roleId},${lead.name}">${lead.name}</option>
 							</c:forEach>
 					</select></td>
 					<td>
 				</tr>
 				<tr>
 					<td>DeadLine</td>
-					<td><input type="text" name="deadlineDate" id="datepicker"></td>
+					<td><input type="text" name="selDate" id="datepicker"></td>
 				</tr>
-
+							
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="Assign" /></td>
-				</tr>
-			</table>
-		</form>
-		<form method="post" action="addProject">
-			<table border="0">
-				<tr>
-					<td colspan="2" align="center"><h2>Add New Project</h2></td>
-				</tr>
-				<tr>
-					<td>Project Name:</td>
-					<td><input type="text" name="projectName"></td>
-				</tr>
-				<tr>
-					<td>Project Description</td>
-					<td><input type="textarea" name="projectDesc"></td>
-					<td>
-				</tr>
-
-				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Add New Project" /></td>
-				</tr>
-			</table>
-		</form>
-		<form method="post" action="addNewTeamLead">
-			<table border="0">
-				<tr>
-					<td colspan="2" align="center"><h2>Add New Team Lead</h2></td>
-				</tr>
-				<tr>
-					<td>Team Lead Name:</td>
-					<td><input type="text" name="teamLeadName"></td>
-				</tr>
-				<tr>
-					<td>Email Address:</td>
-					<td><input type="email" name="email"></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Add New Team Lead" /></td>
 				</tr>
 			</table>
 		</form>

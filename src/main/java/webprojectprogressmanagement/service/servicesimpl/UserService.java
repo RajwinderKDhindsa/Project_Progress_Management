@@ -2,7 +2,9 @@ package webprojectprogressmanagement.service.servicesimpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,17 +41,45 @@ public class UserService implements IUserService {
 		return userManager.getManagerOnly();
 	}
 
-	@Override
-	public List<User> getTeamLeadDetails()
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-
-		return userManager.getTeamLeadList();
-	}
+	
 
 	@Override
 	public void addTeamLead(String teamLeadName, String emailAddress) {
 		userManager.addNewTeamLead(teamLeadName, emailAddress);
+
+	}
+
+	@Override
+	public int checkUser(String email, String password) {
+
+		if (userManager.getUserDetails(email) != null
+				&& password.equals(userManager.getUserDetails(email).getPassword())) {
+			System.out.println("LOGIN TO SYSTEM");
+
+			return userManager.getUserDetails(email).getRoleId();
+		}
+		return 0;
+
+	}
+
+	@Override
+	public User userDetails(String email) {
+
+		return userManager.getUserDetails(email);
+
+	}
+
+	
+	@Override
+	public void addNewTeamMember(String name, String email, int roleId) {
+		userManager.addNewTeamLead(name, email,roleId);
 		
+	}
+
+	@Override
+	public List<User> getTeamDetails(int roleID) {
+		// TODO Auto-generated method stub
+		return userManager.getTeamDetails(roleID);
 	}
 
 }

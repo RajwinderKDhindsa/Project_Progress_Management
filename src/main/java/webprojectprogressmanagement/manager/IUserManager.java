@@ -9,5 +9,8 @@ public interface IUserManager {
 	public User getManagerOnly();
 	public List < User > getUsers();
 	void addNewTeamLead(String teamLeadName, String email);
+	User getUserDetails(String email);
+	void addNewTeamLead(String name, String email, int roleId);
+	List<User> getTeamDetails(int roleID);
 
 }

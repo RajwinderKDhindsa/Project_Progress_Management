@@ -2,15 +2,18 @@ package webprojectprogressmanagement.manager.managerImp;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +47,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 	}
 
 	@Override
-	public List<Team> getAllTeamMembers()
+	public List<Team> getAllTeamMembers(int roleID)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		Session session = null;
 		List<Team> teamList = null;
@@ -53,7 +56,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Team> query = builder.createQuery(Team.class);
 			Root<Team> root = query.from(Team.class);
-			query.select(root).where(builder.equal(root.get("memberRoleId"), 3));
+			query.select(root).where(builder.equal(root.get("memberRoleId"), roleID));
 			Query<Team> q = session.createQuery(query);
 			teamList = q.getResultList();
 			System.out.println("Team Lead list Object : " + teamList);
@@ -126,14 +129,16 @@ public class TeamInfoManager implements ITeamInfoManager {
 	}
 
 	@Override
-	public void assignTaskToTeamLead(int projectId, int leadDetails, String memberName) {
+	public void assignTaskToTeamLead(int projectId, int userId, Integer roleId, String memberName, Date deadLine) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			Team teamLeadAssignment = new Team();
 			teamLeadAssignment.setProjectId(projectId);
-			teamLeadAssignment.setMemberRoleId(leadDetails);
+			teamLeadAssignment.setUserId(userId);
+			teamLeadAssignment.setMemberRoleId(roleId);
 			teamLeadAssignment.setMemberName(memberName);
+			teamLeadAssignment.setDeadline(deadLine);
 			teamLeadAssignment.setStatus("Pending");
 			session.save(teamLeadAssignment);
 		} catch (Exception e) {
@@ -148,4 +153,36 @@ public class TeamInfoManager implements ITeamInfoManager {
 		}
 
 	}
+
+	@Override
+	public boolean updateStatus(String decision, int userId) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			// create update
+			CriteriaUpdate<Team> update = builder.createCriteriaUpdate(Team.class);
+			Root<Team> root = update.from(Team.class);
+			// set update and where clause
+			update.set("status", decision);
+			update.where(builder.equal(root.get("userId"), userId));
+			Transaction transaction = session.beginTransaction();
+			session.createQuery(update).executeUpdate();
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return false;
+	}
+
+
+
 }

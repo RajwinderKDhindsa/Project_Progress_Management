@@ -2,6 +2,7 @@ package webprojectprogressmanagement.manager;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import webprojectprogressmanagement.models.Team;
@@ -9,10 +10,11 @@ import webprojectprogressmanagement.models.Team;
 public interface ITeamInfoManager {
 	public boolean deleteTeamMember(Team team);
 	public boolean updateTeamMember(Team team, int teamId);
-	public List<Team> getAllTeamMembers() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException ;
 	public Team getManager() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException ;
-	public List<Team> getTeamLeadList()
+	List<Team> getAllTeamMembers(int roleID)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
-	void assignTaskToTeamLead(int projectId, int leadDetails, String memberName);	
-	
+	List<Team> getTeamLeadList() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	void assignTaskToTeamLead(int projectId, int userId, Integer roleId, String memberName, Date deadLine);
+	boolean updateStatus(String decision, int userId);
+
 }

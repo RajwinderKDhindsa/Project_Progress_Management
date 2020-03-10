@@ -12,9 +12,14 @@ public class ProjectContants {
 	 * Email Properties
 	 */
 	public static String EMAIL_SUBJECT = "New Assignment";
+	public static String EMAIL_SUBJECT_PASSWORD = "New Account is Created";
+	public static String EMAIL_SUBJECT_STATUS = "Status Updation";
 	public static String MSG = "\n \n You have assigned a new assignment. Open the Application and take an appropriate action : Accept/Reject \n \n Thanks, \n Rajwinder Kaur";
 	public static String PASSWORD_EMAIL = "\n \n You are added in Project Managemnet System. Please find the Password to login into the system.\n\n";
-	public static String SIGNATURE =" Thanks, \\n Rajwinder Kaur";
+	public static String STATUS_NOTIFICATION = "\n \n Please find the status of the project.\n\n";
+	public static String STATUS= "The task assigned by you, have been ";
+	
+	public static String SIGNATURE =" Thanks, \n Rajwinder Kaur";
 	public static String FROM = "ProjectAnalysis2019@gmail.com";
 	public static String GMAIL_HOST = "smtp.gmail.com";
 	public static String GMAIL_PORT = "587";

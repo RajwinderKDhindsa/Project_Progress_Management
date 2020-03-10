@@ -28,6 +28,17 @@ public class ProjectService implements IProjectService{
 	}
 
 	@Override
+	public List<Projects> getAcceptedProjectList()
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		return projectInfoManager.getAcceptedProjectList();
+	}
+	@Override
+	public List<Projects> getProjectList(int roleId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		return projectInfoManager.getProjectList(roleId);
+	}
+
+	@Override
 	public List<Projects> getProjectName()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		return projectInfoManager.getProjectList();

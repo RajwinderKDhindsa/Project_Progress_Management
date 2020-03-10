@@ -1,8 +1,6 @@
 package webprojectprogressmanagement.manager.managerImp;
 
-import java.io.IOException;
 import java.security.SecureRandom;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
@@ -76,32 +74,6 @@ public class UserManager implements IUserManager {
 		return teamManager;
 	}
 
-	public List<User> getTeamLeadList()
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-		Session session = null;
-		List<User> teamLeadList = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<User> query = builder.createQuery(User.class);
-			Root<User> root = query.from(User.class);
-			query.select(root).where(builder.equal(root.get("roleId"), 2));
-			Query<User> q = session.createQuery(query);
-			teamLeadList = q.getResultList();
-			return (List<User>) teamLeadList;
-		} catch (Exception e) {
-			if (session.getTransaction().isActive()) {
-				session.getTransaction().rollback();
-			}
-			e.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
-		return teamLeadList;
-	}
-
 	@Override
 	public void addNewTeamLead(String teamLeadName, String email) {
 		Session session = null;
@@ -112,10 +84,10 @@ public class UserManager implements IUserManager {
 			teamLead.setUserName(email);
 			teamLead.setRoleId(2);
 			String password = generatePassword(20);
-			// send email to person about with password
 			teamLead.setPassword(password);
 			session.save(teamLead);
-			emailService.sendPasswordEmail(email,teamLeadName,password);
+			// send email to person with password
+			emailService.sendPasswordEmail(email, teamLeadName, password);
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -134,6 +106,85 @@ public class UserManager implements IUserManager {
 			returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
 		}
 		return new String(returnValue);
+	}
+
+	@Override
+	public User getUserDetails(String email) {
+		Session session = null;
+		User user = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<User> query = builder.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+			query.select(root).where(builder.equal(root.get("userName"), email));
+			Query<User> q = session.createQuery(query);
+			user = q.getSingleResult();
+			System.out.println("****************************************************************" + user.getUserName());
+			return user;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return user;
+	}
+
+	@Override
+	public void addNewTeamLead(String name, String email, int roleId) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			User teamLead = new User();
+			teamLead.setName(name);
+			teamLead.setUserName(email);
+			teamLead.setRoleId(roleId);
+			String password = generatePassword(20);
+			// send email to person about with password
+			teamLead.setPassword(password);
+			session.save(teamLead);
+			emailService.sendPasswordEmail(email, name, password);
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
+
+	@Override
+	public List<User> getTeamDetails(int roleID) {
+		Session session = null;
+		List<User> teamLeadList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<User> query = builder.createQuery(User.class);
+			Root<User> root = query.from(User.class);
+			query.select(root).where(builder.equal(root.get("roleId"), roleID));
+			Query<User> q = session.createQuery(query);
+			teamLeadList = q.getResultList();
+			return (List<User>) teamLeadList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return teamLeadList;
 	}
 
 }

@@ -1,5 +1,7 @@
 package webprojectprogressmanagement.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,22 +27,51 @@ public class Team {
 	@Column(name = "memberRoleId")
 	private int memberRoleId;
 	
-	
+	@Column(name = "userId")
+	private int userId;
+		
+		
 	@Column(name = "memberName")
 	private String memberName;
+	
+	@Column(name = "deadline")
+	private Date deadline;
 	
 	public Team() {
 		
 	}
 	
 
-	public Team(int teamId, int projectId, String status, int memberRoleId, String memberName) {
+	public Team(int teamId, int projectId, String status, int memberRoleId,int userId, String memberName, Date deadline) {
 		this.teamId = teamId;
 		this.projectId = projectId;
 		this.status = status;
+		this.userId = userId;
+		this.deadline = deadline;
 		this.memberRoleId = memberRoleId;
 		this.memberName = memberName;
 	}
+
+	
+	public Date getDeadline() {
+		return deadline;
+	}
+
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
 
 	public int getTeamId() {
 		return teamId;

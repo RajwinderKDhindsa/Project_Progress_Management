@@ -61,7 +61,62 @@ public class ProjectInfoManager implements IProjectInfoManager {
 		}
 		return projectsList;
 	}
+	
+	@Override
+	public List<Projects> getAcceptedProjectList()
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		Session session = null;
+		List<Projects> projectsList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Projects> query = builder.createQuery(Projects.class);
+			Root<Projects> root = query.from(Projects.class);
+			query.select(root).where(builder.equal(root.get("projectStatus"), "Accepted"));
+			Query<Projects> q = session.createQuery(query);
+			projectsList = q.getResultList();
+			return projectsList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return projectsList;
+	}
+	
+	@Override
+	public List<Projects> getProjectList(int roleId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		Session session = null;
+		List<Projects> projectsList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Projects> query = builder.createQuery(Projects.class);
+			Root<Projects> root = query.from(Projects.class);
+			query.select(root).where(builder.equal(root.get("roleId"), roleId));
+			Query<Projects> q = session.createQuery(query);
+			projectsList = q.getResultList();
+			return projectsList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return projectsList;
+	}
 
+	
 	@Override
 	public List<String> getProjectNameList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
@@ -89,8 +144,6 @@ public class ProjectInfoManager implements IProjectInfoManager {
 		return projectsList;
 	}
 
-
-
 	@Override
 	public void addProject(String projectName, String projectDesc) {
 		Session session = null;
@@ -112,6 +165,5 @@ public class ProjectInfoManager implements IProjectInfoManager {
 			}
 		}
 	}
-
 
 }

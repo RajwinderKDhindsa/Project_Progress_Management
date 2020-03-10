@@ -4,10 +4,10 @@
 <body>
 	<div>
 		<div>
-			<h1>Response Page</h1>
-			<h2>Hello  ${message}  </h2>
+			<h1>Another page</h1>
+			<h2>Hello  </h2>
 			
-			Response is successfully captured!! <strong><a href="/">link</a></strong> to visit previous page.
+			Click on this <strong><a href="/">link</a></strong> to visit previous page.
 		</div>
 	</div>
 </body>
