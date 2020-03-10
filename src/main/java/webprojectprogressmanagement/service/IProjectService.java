@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import webprojectprogressmanagement.models.Projects;
+import webprojectprogressmanagement.models.User;
 
 public interface IProjectService {
 
@@ -14,10 +15,9 @@ public interface IProjectService {
 
 	void addProject(String projectName, String projectDesc);
 
-	List<Projects> getProjectList(int roleId)
+	List<Projects> getProjectList(int projectID)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
 	List<Projects> getAcceptedProjectList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
-	
-}
+	}

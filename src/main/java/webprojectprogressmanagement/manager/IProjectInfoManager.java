@@ -16,4 +16,8 @@ public interface IProjectInfoManager {
 
 	boolean updateProjectStatus(String decision, int projectId);
 
+	List<Projects> getAcceptedProjectList();
+
+	List<Projects> getProjectList(int projectID);
+
 }

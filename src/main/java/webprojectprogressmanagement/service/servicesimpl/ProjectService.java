@@ -13,14 +13,11 @@ import webprojectprogressmanagement.service.IProjectService;
 
 @Service
 
-public class ProjectService implements IProjectService{
+public class ProjectService implements IProjectService {
 
-
-	
 	@Autowired
 	ProjectInfoManager projectInfoManager;
-	
-	
+
 	@Override
 	public List<Projects> getProjectList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
@@ -33,23 +30,19 @@ public class ProjectService implements IProjectService{
 		return projectInfoManager.getAcceptedProjectList();
 	}
 	@Override
-	public List<Projects> getProjectList(int roleId)
+	public List<Projects> getProjectList(int projectID)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
-		return projectInfoManager.getProjectList(roleId);
+		return projectInfoManager.getProjectList(projectID);
 	}
 
-	@Override
-	public List<Projects> getProjectName()
+	@Override	public List<Projects> getProjectName()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		return projectInfoManager.getProjectList();
 	}
 
-
 	@Override
-	public void addProject( String projectName, String projectDesc) {
+	public void addProject(String projectName, String projectDesc) {
 		projectInfoManager.addProject(projectName, projectDesc);
 	}
-	
 
-	
 }
