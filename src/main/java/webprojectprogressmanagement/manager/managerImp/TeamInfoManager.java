@@ -18,6 +18,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.ITeamInfoManager;
+import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.utils.HibernateUtil;
 
@@ -57,6 +58,34 @@ public class TeamInfoManager implements ITeamInfoManager {
 			CriteriaQuery<Team> query = builder.createQuery(Team.class);
 			Root<Team> root = query.from(Team.class);
 			query.select(root).where(builder.equal(root.get("memberRoleId"), roleID));
+			Query<Team> q = session.createQuery(query);
+			teamList = q.getResultList();
+			System.out.println("Team Lead list Object : " + teamList);
+			return (List<Team>) teamList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return teamList;
+	}
+
+	@Override
+	public List<Team> getTeamLeadDetails(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		Session session = null;
+		List<Team> teamList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Team> query = builder.createQuery(Team.class);
+			Root<Team> root = query.from(Team.class);
+			query.select(root).where(builder.equal(root.get("userId"), userId));
 			Query<Team> q = session.createQuery(query);
 			teamList = q.getResultList();
 			System.out.println("Team Lead list Object : " + teamList);
@@ -210,4 +239,60 @@ public class TeamInfoManager implements ITeamInfoManager {
 		return teamList;
 	}
 
+	@Override
+	public List<Team> getAcceptedProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		Session session = null;
+		List<Team> projectsList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Team> query = builder.createQuery(Team.class);
+			Root<Team> root = query.from(Team.class);
+			query.select(root).where(builder.equal(root.get("projectStatus"), "Accepted"),
+					builder.equal(root.get("userId"), userId));
+			Query<Team> q = session.createQuery(query);
+			projectsList = q.getResultList();
+			return projectsList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return projectsList;
+	}
+
+	@Override
+	public List<Team> getProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		Session session = null;
+		List<Team> projectsList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Team> query = builder.createQuery(Team.class);
+			Root<Team> root = query.from(Team.class);
+			query.select(root).where(builder.equal(root.get("userId"), userId));
+			Query<Team> q = session.createQuery(query);
+			projectsList = q.getResultList();
+			return projectsList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return projectsList;
+	}
+
+	
 }

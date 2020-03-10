@@ -6,7 +6,12 @@ import java.util.List;
 
 import webprojectprogressmanagement.models.Team;
 public interface ITeamMemberService {
-	List<Team> getTeamLeadManager(Integer teamId) throws IllegalAccessException, ClassNotFoundException, SQLException, IOException;
 	List<Team> getTeamMember(int roleId)
-			throws IllegalAccessException, ClassNotFoundException, SQLException, IOException; 
+			throws IllegalAccessException, ClassNotFoundException, SQLException, IOException;
+	List<Team> getProjectList(int id) throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	List<Team> getTeamLeadManager(int Id)
+			throws IllegalAccessException, ClassNotFoundException, SQLException, IOException;
+	Object getAcceptedProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	
 }

@@ -1,8 +1,10 @@
 package webprojectprogressmanagement.manager.managerImp;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
@@ -10,9 +12,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.ISubTaskManager;
+import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.SubTasks;
 import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.utils.HibernateUtil;
@@ -65,8 +69,8 @@ public class SubTaskManager implements ISubTaskManager {
 			session = HibernateUtil.getSessionFactory().openSession();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			// create update
-			CriteriaUpdate<Team> update = builder.createCriteriaUpdate(Team.class);
-			Root<Team> root = update.from(Team.class);
+			CriteriaUpdate<SubTasks> update = builder.createCriteriaUpdate(SubTasks.class);
+			Root<SubTasks> root = update.from(SubTasks.class);
 			// set update and where clause
 			update.set("status", decision);
 			update.where(builder.equal(root.get("userId"), userId));
@@ -86,5 +90,32 @@ public class SubTaskManager implements ISubTaskManager {
 		}
 		return false;
 	}
+
+	@Override
+	public List<SubTasks> getTaskDetails(int userId) {
+		Session session = null;
+		List<SubTasks> projectsList = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<SubTasks> query = builder.createQuery(SubTasks.class);
+			Root<SubTasks> root = query.from(SubTasks.class);
+			query.select(root).where(builder.equal(root.get("userId"), userId));;
+			Query<SubTasks> q = session.createQuery(query);
+			projectsList = q.getResultList();
+			return projectsList;
+		} catch (Exception e) {
+			if (session.getTransaction().isActive()) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return projectsList;
+	}
+	
 
 }

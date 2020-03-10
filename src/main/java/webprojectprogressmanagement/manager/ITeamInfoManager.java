@@ -19,6 +19,13 @@ public interface ITeamInfoManager {
 	boolean updateStatus(String decision, int userId);
 
 	public List<Team> getTeamLeadManager(Integer id);
+	
+	List<Team> getTeamLeadDetails(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	List<Team> getAcceptedProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	List<Team> getProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
 	
 }

@@ -5,11 +5,10 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import webprojectprogressmanagement.models.SubTasks;
 import webprojectprogressmanagement.models.Team;
 
 public interface ITaskAssignment {
-
-	List<Team> getTeamMemberDetails(int roleId) throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
 	void assignTaskToTeamMember(int projectId, String taskName, String taskDesc, int userId, Integer roleId,
 			String memberName, Date deadLine);
@@ -19,4 +18,13 @@ public interface ITaskAssignment {
 	boolean updateStatus(String decision, int userId);
 
 	boolean updateTaskStatus(String decision, Integer userId);
+
+	List<Team> getAllTeamMemberDetails(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+
+	List<SubTasks> getTaskList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+
+	
+	boolean updateProjectStatus(String decision, int userId, int projectId);
 }

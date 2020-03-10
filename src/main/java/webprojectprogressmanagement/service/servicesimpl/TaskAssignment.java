@@ -8,8 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import webprojectprogressmanagement.manager.managerImp.ProjectInfoManager;
 import webprojectprogressmanagement.manager.managerImp.SubTaskManager;
 import webprojectprogressmanagement.manager.managerImp.TeamInfoManager;
+import webprojectprogressmanagement.models.SubTasks;
 import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.service.ITaskAssignment;
 
@@ -22,6 +24,9 @@ public class TaskAssignment implements ITaskAssignment {
 	@Autowired
 	SubTaskManager subTaskManager;
 
+	@Autowired
+	ProjectInfoManager projectInfoManager;
+
 	@Override
 	public void assignTaskToTeamLead(int projectId, int userId, Integer roleId, String memberName, Date deadLine) {
 		teamInfoManager.assignTaskToTeamLead(projectId, userId, roleId, memberName, deadLine);
@@ -29,7 +34,7 @@ public class TaskAssignment implements ITaskAssignment {
 	}
 
 	@Override
-	public List<Team> getTeamMemberDetails(int roleId)
+	public List<Team> getAllTeamMemberDetails(int roleId)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		return teamInfoManager.getAllTeamMembers(roleId);
 	}
@@ -47,9 +52,21 @@ public class TaskAssignment implements ITaskAssignment {
 	}
 
 	@Override
+	public boolean updateProjectStatus(String decision, int userId, int projectId) {
+		updateStatus(decision, userId);
+		return projectInfoManager.updateProjectStatus(decision, projectId);
+	}
+
+	@Override
 	public boolean updateTaskStatus(String decision, Integer userId) {
 		updateStatus(decision, userId);
 		return subTaskManager.updateTaskStatus(decision, userId);
+	}
+
+	@Override
+	public List<SubTasks> getTaskList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		return subTaskManager.getTaskDetails(userId);
 	}
 
 }

@@ -16,19 +16,32 @@ public class TeamMemberService implements ITeamMemberService {
 
 	@Autowired
 	TeamInfoManager teamInfoManager;
-	
+
 	@Override
-	public List<Team> getTeamMember(int roleId) throws IllegalAccessException, ClassNotFoundException, SQLException, IOException {
+	public List<Team> getTeamMember(int roleId)
+			throws IllegalAccessException, ClassNotFoundException, SQLException, IOException {
 		List<Team> team = teamInfoManager.getAllTeamMembers(roleId);
 		return team;
 	}
 
 	@Override
-	public List<Team> getTeamLeadManager(Integer Id)
+	public List<Team> getTeamLeadManager(int Id)
 			throws IllegalAccessException, ClassNotFoundException, SQLException, IOException {
-		List<Team> user = teamInfoManager.getTeamLeadManager(Id);
-		return user;
+
+		return teamInfoManager.getTeamLeadManager(Id);
 	}
-	
+
+	@Override
+	public List<Team> getProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+		return teamInfoManager.getProjectList(userId);
+	}
+
+	@Override
+	public Object getAcceptedProjectList(int userId)
+			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
+
+		return teamInfoManager.getAcceptedProjectList(userId);
+	}
 
 }

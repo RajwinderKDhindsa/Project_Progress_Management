@@ -12,37 +12,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AssignTask")
 public class Team {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "teamId")
 	private int teamId;
-	
+
 	@Column(name = "projectID")
 	private int projectID;
-	
-	@Column(name = "status",nullable = false, columnDefinition =  "varchar(25) default 'Pending'")
+
+	@Column(name = "status", nullable = false, columnDefinition = "varchar(25) default 'Pending'")
 	private String status;
-	
+
 	@Column(name = "memberRoleId")
 	private int memberRoleId;
-	
+
 	@Column(name = "userId")
 	private int userId;
-		
-		
+
 	@Column(name = "memberName")
 	private String memberName;
-	
+
 	@Column(name = "deadline")
 	private Date deadline;
-	
-	public Team() {
-		
-	}
-	
 
-	public Team(int teamId, int projectId, String status, int memberRoleId,int userId, String memberName, Date deadline) {
+	public Team() {
+
+	}
+
+	public Team(int teamId, int projectId, String status, int memberRoleId, int userId, String memberName,
+			Date deadline) {
 		this.teamId = teamId;
 		this.projectID = projectId;
 		this.status = status;
@@ -52,26 +51,21 @@ public class Team {
 		this.memberName = memberName;
 	}
 
-	
 	public Date getDeadline() {
 		return deadline;
 	}
-
 
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 
-
 	public int getUserId() {
 		return userId;
 	}
 
-
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
 
 	public int getTeamId() {
 		return teamId;
@@ -93,11 +87,9 @@ public class Team {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	public int getMemberRoleId() {
 		return memberRoleId;

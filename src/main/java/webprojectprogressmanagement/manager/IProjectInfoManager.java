@@ -10,14 +10,10 @@ public interface IProjectInfoManager {
 	public List<Projects> getProjectList()
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
-	List<String> getProjectNameList()
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	List<String> getProjectNameList() throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
 	void addProject(String projectName, String projectDesc);
 
-	List<Projects> getProjectList(int roleId)
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
+	boolean updateProjectStatus(String decision, int projectId);
 
-	List<Projects> getAcceptedProjectList()
-			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 }

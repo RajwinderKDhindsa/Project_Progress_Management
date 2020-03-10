@@ -102,15 +102,17 @@
 					<td colspan="2"><c:out value="${project.projectName}" /></td>
 					<td colspan="2"><c:out value="${project.projectDesc}" /></td>
 					<td colspan="2"><c:out value="${project.projectStatus}" /></td>
-					<td colspan="2">
-						<form method="post" action="acceptProject">
-							Yes: <input type="radio" name="taskDecision" value="Accepted">
-							NO: <input type="radio" name="taskDecision" value="Rejected">
-							<input type="hidden" name="userDetails"
-								value="${userDetails.id},${userDetails.name},${userDetails.userName}"> <input
-								type="submit" value="Accept/Reject" />
-						</form>
-					</td>
+					<c:if test="${task.status eq 'Pending'}">
+						<td colspan="2">
+							<form method="post" action="acceptProject">
+								Yes: <input type="radio" name="taskDecision" value="Accepted">
+								NO: <input type="radio" name="taskDecision" value="Rejected">
+								<input type="hidden" name="userDetails"
+									value="${userDetails.id},${userDetails.name},${userDetails.userName},${project.projectId}">
+								<input type="submit" value="Accept/Reject" />
+							</form>
+						</td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</table>

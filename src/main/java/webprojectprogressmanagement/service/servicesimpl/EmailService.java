@@ -111,7 +111,7 @@ public class EmailService implements IEmailService{
 			message.setFrom(new InternetAddress(ProjectContants.FROM));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			message.setSubject(ProjectContants.EMAIL_SUBJECT_STATUS);
-			message.setText("Dear "+username+" ," + ProjectContants.STATUS_NOTIFICATION+"\n\n"+ProjectContants.STATUS+decision+"!"+ProjectContants.SIGNATURE);
+			message.setText("Dear "+username.trim()+" ," + ProjectContants.STATUS_NOTIFICATION+"\n\n"+ProjectContants.STATUS+decision+"!"+ProjectContants.SIGNATURE);
 
 			Transport.send(message);
 
