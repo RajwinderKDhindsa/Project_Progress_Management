@@ -58,11 +58,9 @@
 				</tr>
 			</table>
 		</form>
+		<h2 align="center"><font color="black">Add New Project</font></h2>
 		<form method="post" action="addProject">
-			<table border="0">
-				<tr>
-					<td colspan="2" align="center"><h2>Add New Project</h2></td>
-				</tr>
+			<table border="1" cellpadding="30%" align="center" bordercolor="blue">
 				<tr>
 					<td>Project Name:</td>
 					<td><input type="text" name="projectName"></td>
@@ -70,7 +68,6 @@
 				<tr>
 					<td>Project Description</td>
 					<td><input type="textarea" name="projectDesc"></td>
-					<td>
 				</tr>
 
 				<tr>
@@ -79,11 +76,9 @@
 				</tr>
 			</table>
 		</form>
+		<h2 align="center"><font color="black">Add New Team Lead</font></h2>
 		<form method="post" action="addNewTeamLead">
-			<table border="0">
-				<tr>
-					<td colspan="2" align="center"><h2>Add New Team Lead</h2></td>
-				</tr>
+			<table border="1" cellpadding="30%" align="center" bordercolor="blue">
 				<tr>
 					<td>Team Lead Name:</td>
 					<td><input type="text" name="teamLeadName"></td>
@@ -98,19 +93,17 @@
 				</tr>
 			</table>
 		</form>
-		<table>
-			<tr bgcolor="blue">
-				<td colspan="2"><font color="white"> Project List </font></td>
-			</tr>
-			<tr bgcolor="blue">
-				<td colspan="2"><font color="white"> Project ID </font></td>
-				<td colspan="2"><font color="white"> Project Name </font></td>
-				<td colspan="2"><font color="white"> Project Description
+		<h2 align="center"><font color="black"> Project List </font></h2>
+		<table border="1" cellpadding="30%" align="center" bordercolor="blue">
+			<tr>
+				<td colspan="2"><font color="black"> Project ID </font></td>
+				<td colspan="2"><font color="black"> Project Name </font></td>
+				<td colspan="2"><font color="black"> Project Description
 				</font></td>
-				<td colspan="2"><font color="white"> Project Status </font></td>
+				<td colspan="2"><font color="black"> Project Status </font></td>
 			</tr>
 			<c:forEach var="project" items="${projectList}">
-				<tr bgcolor="blue">
+				<tr>
 					<td colspan="2"><c:out value="${project.projectId}" /></td>
 					<td colspan="2"><c:out value="${project.projectName}" /></td>
 					<td colspan="2"><c:out value="${project.projectDesc}" /></td>

@@ -4,42 +4,33 @@
 <html lang="en">
 <body>
 	<div align="center">
-
-		<table border="0">
+<h1 align="center"><font color="black">Team member details</font></h1>
+		<table border="1" cellpadding="30%" align="center" bordercolor="blue">
+		
 			<tr>
-				<td colspan="2" align="center"><h2>Team member details</h2></td>
-			</tr>
-			<tr>
-		</table>
-
-
-		<table border="0">
-			<tr bgcolor="blue">
-				<td colspan="2"><font color="white"> Lead </font></td>
-				<td colspan="2"><font color="white"> Manager </font></td>
+				<td colspan="2"><font color="black"> Lead </font></td>
+				<td colspan="2"><font color="black"> Manager </font></td>
 
 			</tr>
 
-			<tr bgcolor="blue">
+			<tr>
 				<td colspan="2"><c:out value="${leader}" /></td>
 				<td colspan="2"><c:out value="${manager}" /></td>
 			</tr>
 
 		</table>
 
-		<table>
-			<tr bgcolor="blue">
-				<td colspan="2"><font color="white"> Task List </font></td>
-			</tr>
-			<tr bgcolor="blue">
-				<td colspan="2"><font color="white"> Task ID </font></td>
-				<td colspan="2"><font color="white"> Task Name </font></td>
-				<td colspan="2"><font color="white"> Task Description </font></td>
-				<td colspan="2"><font color="white"> Task Status </font></td>
-				<td colspan="2"><font color="white"> Task Deadline </font></td>
+<h1 align="center"><font color="black"> Task List </font></h1>
+		<table border="1" cellpadding="30%" align="center" bordercolor="blue">
+			<tr>
+				<th colspan="2"><font color="black"> Task ID </font></th>
+				<th colspan="2"><font color="black"> Task Name </font></th>
+				<th colspan="2"><font color="black"> Task Description </font></th>
+				<th colspan="2"><font color="black"> Task Status </font></th>
+				<th colspan="2"><font color="black"> Task Deadline </font></th>
 			</tr>
 			<c:forEach var="task" items="${taskList}">
-				<tr bgcolor="blue">
+				<tr>
 					<td colspan="2"><c:out value="${task.taskId}" /></td>
 					<td colspan="2"><c:out value="${task.taskName}" /></td>
 					<td colspan="2"><c:out value="${task.taskDesc}" /></td>
