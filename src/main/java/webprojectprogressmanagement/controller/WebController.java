@@ -56,7 +56,7 @@ public class WebController {
 
 		if (userService.checkUser(email, password) == 1) {
 			User user = userService.userDetails(email);
-			model.put("message", "Welcome" + user.getName() + " Team Manager!!");
+			model.put("message", "Welcome " + user.getName() + "!!");
 			model.put("userDetails", user);
 			model.put("managerDetails", userService.getManagerDetails());
 			model.put("leadList", userService.getTeamDetails(2));
@@ -67,7 +67,7 @@ public class WebController {
 			return "Manager";
 		} else if (userService.checkUser(email, password) == 2) {
 			User user = userService.userDetails(email);
-			model.put("message", "Welcome" + user.getName() + " Team Manager!!");
+			model.put("message", "Welcome " + user.getName() + " Team Manager!!");
 			model.put("userDetails", user);
 			model.put("managerDetails", userService.getManagerDetails());
 			model.put("memberList", userService.getTeamDetails(3));

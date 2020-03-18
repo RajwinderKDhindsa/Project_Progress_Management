@@ -30,16 +30,16 @@
 				</tr>
 				<tr>
 					<td>Project:</td>
-					<td><select id="projectName" name="projectName">
+					<td><select id="projectName" name="projectName" class="txtBox">
 							<option value="">Select Project</option>
-							<c:forEach items="${projectList}" var="project">
-								<option value="${project.projectId}">${project.projectName}</option>
+							<c:forEach items="${projectList}" var="project" >
+								<option  value="${project.projectId}">${project.projectName}</option>
 							</c:forEach>
 					</select></td>
 				</tr>
 				<tr>
 					<td>Lead List:</td>
-					<td><select id="lead" name="TeamLeadDetails">
+					<td><select id="lead" name="TeamLeadDetails" class="txtBox">
 							<option value="">Select Team Lead</option>
 							<c:forEach items="${leadList}" var="lead">
 								<option value="${lead.id},${lead.roleId},${lead.name}">${lead.name}</option>
@@ -49,12 +49,12 @@
 				</tr>
 				<tr>
 					<td>DeadLine</td>
-					<td><input type="text" name="deadlineDate" id="datepicker"></td>
+					<td><input type="text" name="deadlineDate" id="datepicker" class="txtBox"></td>
 				</tr>
 
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
-						value="Assign" /></td>
+						value="Assign" class="btnAssign"/></td>
 				</tr>
 			</table>
 		</form>
@@ -71,7 +71,7 @@
 				</tr>
 
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
+					<td colspan="2" align="center"><input type="submit" class="txtBox"
 						value="Add New Project" /></td>
 				</tr>
 			</table>
@@ -89,7 +89,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
-						value="Add New Team Lead" /></td>
+						value="Add New Team Lead" class="txtBox"/></td>
 				</tr>
 			</table>
 		</form>
@@ -114,3 +114,19 @@
 	</div>
 </body>
 </html>
+<style type="text/css">
+.txtBox{
+width: 80%;
+    height: 28px;
+    border-color:blue;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+.btnAssign{
+width: 35%;
+    height: 28px;
+    border-color:blue;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+</style>

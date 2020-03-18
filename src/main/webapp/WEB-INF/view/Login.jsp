@@ -30,14 +30,14 @@
 
 				<tr>
 					<td>Email Address:</td>
-					<td><input type="email" name="email"></td>
+					<td><input type="email" name="email" class="txtBox"></td>
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td><input type="password" name="password"></td>
+					<td><input type="password" name="password" class="txtBox"></td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
+					<td colspan="2" align="center"><input type="submit" class="btnAssign"
 						value="LOGIN" /></td>
 				</tr>
 			</table>
@@ -46,3 +46,19 @@
 	</div>
 </body>
 </html>
+<style type="text/css">
+.txtBox{
+width: 150%;
+    height: 28px;
+    border-color:blue;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+.btnAssign{
+width: 35%;
+    height: 28px;
+    border-color:blue;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+</style>
