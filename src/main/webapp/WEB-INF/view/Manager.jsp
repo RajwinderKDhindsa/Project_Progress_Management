@@ -21,7 +21,10 @@
 	<div align="center">
 
 		<h1>Manager</h1>
-		<h2>Hello ${message}</h2>
+		<h2>${message}</h2>
+		<form method="post" action="logout">
+			<input type="submit" value="LOGOUT">
+		</form>
 		<form method="post" action="assignProject">
 			<table border="0">
 				<tr>

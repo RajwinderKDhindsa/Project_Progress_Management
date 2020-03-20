@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import webprojectprogressmanagement.manager.managerImp.TeamInfoManager;
+import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.service.ITeamMemberService;
 
@@ -32,7 +33,7 @@ public class TeamMemberService implements ITeamMemberService {
 	}
 
 	@Override
-	public List<Team> getProjectList(int userId)
+	public List<Projects> getProjectList(int userId)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		return teamInfoManager.getProjectList(userId);
 	}

@@ -20,13 +20,13 @@
 				<Pattern>${LOG_PATTERN}</Pattern>
 			</PatternLayout>
 			<Policies>
-				<SizeBasedTriggeringPolicy size="10MB" />
+				<SizeBasedTriggeringPolicy size="1MB" />
 			</Policies>
 			<DefaultRolloverStrategy max="10" />
 		</RollingFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="websearchengine" level="debug"
+		<Logger name="webprojectprogressmanagement" level="debug"
 			additivity="false">
 			<AppenderRef ref="ConsoleAppender" />
 			<AppenderRef ref="FileAppender" />

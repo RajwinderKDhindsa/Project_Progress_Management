@@ -20,7 +20,10 @@
 <body>
 	<div align="center">
 		<h1>Team Lead</h1>
-		<h2>Hello ${message}</h2>
+		<h2>${message}</h2>
+		<form method="post" action="logout">
+			<input type="submit" value="LOGOUT">
+		</form>
 		<form method="post" action="assignTaskToTeamMember">
 			<table border="0">
 				<tr>
@@ -31,15 +34,15 @@
 					<td>Project:</td>
 					<td><select id="projectName" name="projectName">
 							<option value="">Select Project</option>
-							<c:forEach items="${acceptedProjectList}" var="project">
+							<c:forEach items="${projectList}" var="project">
 								<option value="${project.projectId}">${project.projectName}</option>
 							</c:forEach>
 					</select></td>
 				</tr>
 				<tr>
 					<td>Team Member List:</td>
-					<td><select id="lead" name="TeamLeadDetails">
-							<option value="">Select Team Lead</option>
+					<td><select id="lead" name="TeamMemberDetails">
+							<option value="">Select Team Member</option>
 							<c:forEach items="${memberList}" var="member">
 								<option value="${member.id},${member.roleId},${member.name}">${member.name}</option>
 							</c:forEach>
@@ -52,7 +55,7 @@
 				</tr>
 				<tr>
 					<td>Task Description:</td>
-					<td><input type="text" name="taskDesc"></td>
+					<td><textarea cols="40" rows="2" name="taskDesc"></textarea></td>
 				</tr>
 				<tr>
 					<td>DeadLine</td>
@@ -102,7 +105,7 @@
 					<td colspan="2"><c:out value="${project.projectName}" /></td>
 					<td colspan="2"><c:out value="${project.projectDesc}" /></td>
 					<td colspan="2"><c:out value="${project.projectStatus}" /></td>
-					<c:if test="${task.status eq 'Pending'}">
+					<c:if test="${project.projectStatus eq 'Pending'}">
 						<td colspan="2">
 							<form method="post" action="acceptProject">
 								Yes: <input type="radio" name="taskDecision" value="Accepted">

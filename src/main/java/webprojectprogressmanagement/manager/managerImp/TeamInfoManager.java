@@ -249,7 +249,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Team> query = builder.createQuery(Team.class);
 			Root<Team> root = query.from(Team.class);
-			query.select(root).where(builder.equal(root.get("projectStatus"), "Accepted"),
+			query.select(root).where(builder.equal(root.get("status"), "Accepted"),
 					builder.equal(root.get("userId"), userId));
 			Query<Team> q = session.createQuery(query);
 			projectsList = q.getResultList();
@@ -268,10 +268,11 @@ public class TeamInfoManager implements ITeamInfoManager {
 	}
 
 	@Override
-	public List<Team> getProjectList(int userId)
+	public List<Projects> getProjectList(int userId)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		Session session = null;
 		List<Team> projectsList = null;
+		List<Projects> projects = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -280,7 +281,28 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("userId"), userId));
 			Query<Team> q = session.createQuery(query);
 			projectsList = q.getResultList();
-			return projectsList;
+			/*
+			 * for (int i = 0; i < projectsList.size(); i++) { Team team =
+			 * projectsList.get(i); System.out.println("Project Id " + team.getProjectId() +
+			 * " Member Name " + team.getMemberName()); CriteriaQuery<Projects> pQuery =
+			 * builder.createQuery(Projects.class); Root<Projects> pRoot =
+			 * pQuery.from(Projects.class);
+			 * pQuery.select(pRoot).where(builder.equal(pRoot.get("projectId"),
+			 * team.getProjectId())); Query<Projects> pQ = session.createQuery(pQuery);
+			 * projects = pQ.getResultList(); }
+			 */
+
+			for (Team team : projectsList) {
+				if (team != null) {
+					System.out.println("Project Id " + team.getProjectId() + " Member Name " + team.getMemberName());
+					CriteriaQuery<Projects> pQuery = builder.createQuery(Projects.class);
+					Root<Projects> pRoot = pQuery.from(Projects.class);
+					pQuery.select(pRoot).where(builder.equal(pRoot.get("projectId"), team.getProjectId()));
+					Query<Projects> pQ = session.createQuery(pQuery);
+					projects = pQ.getResultList();
+				}
+			}
+			return projects;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -291,8 +313,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 				session.close();
 			}
 		}
-		return projectsList;
+		return projects;
 	}
 
-	
 }

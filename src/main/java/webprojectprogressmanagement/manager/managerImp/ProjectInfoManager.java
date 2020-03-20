@@ -18,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.IProjectInfoManager;
 import webprojectprogressmanagement.models.Projects;
-import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.utils.HibernateUtil;
 
 @Repository
@@ -124,7 +123,7 @@ public class ProjectInfoManager implements IProjectInfoManager {
 			CriteriaUpdate<Projects> update = builder.createCriteriaUpdate(Projects.class);
 			Root<Projects> root = update.from(Projects.class);
 			// set update and where clause
-			update.set("status", decision);
+			update.set("projectStatus", decision);
 			update.where(builder.equal(root.get("projectId"), projectId));
 			Transaction transaction = session.beginTransaction();
 			session.createQuery(update).executeUpdate();

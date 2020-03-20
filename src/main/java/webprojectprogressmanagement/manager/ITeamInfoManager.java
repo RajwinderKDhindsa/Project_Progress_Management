@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.Team;
 
 public interface ITeamInfoManager {
@@ -24,7 +25,7 @@ public interface ITeamInfoManager {
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 	List<Team> getAcceptedProjectList(int userId)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
-	List<Team> getProjectList(int userId)
+	List<Projects> getProjectList(int userId)
 			throws ClassNotFoundException, IllegalAccessException, SQLException, IOException;
 
 	
