@@ -60,7 +60,6 @@ public class WebController {
 	@PostMapping("/login")
 	public String login(@RequestParam("email") String email, @RequestParam("password") String password,
 			Map<String, Object> model, HttpServletRequest request)
-
 			throws ParseException, ClassNotFoundException, IllegalAccessException, SQLException, IOException {
 		log.debug("User try to login with userName " + email);
 		log.info("User try to login with userName " + email);
@@ -201,11 +200,7 @@ public class WebController {
 		return "redirect:/";
 	}
 
-	/*
-	 * assignTaskToTeamMember(int projectId, String taskName, String taskDesc, int userId, Integer roleId,
-			String memberName, Date deadLine)
-			${member.id},${member.roleId},${member.name}
-	 */
+	
 	@PostMapping("/assignTaskToTeamMember") // it only support port method
 	public String assignTaskToTeamMember(@RequestParam("TeamMemberDetails") String teamLeadDetails,
 			@RequestParam("projectName") int projectId, @RequestParam("taskName") String taskName,
