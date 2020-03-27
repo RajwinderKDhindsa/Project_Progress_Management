@@ -36,6 +36,7 @@ public class SubTasks {
 
 	@Column(name = "status")
 	private String status;
+	
 	public SubTasks() {
 		
 	}

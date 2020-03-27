@@ -60,7 +60,6 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("memberRoleId"), roleID));
 			Query<Team> q = session.createQuery(query);
 			teamList = q.getResultList();
-			System.out.println("Team Lead list Object : " + teamList);
 			return (List<Team>) teamList;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -88,7 +87,6 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("userId"), userId));
 			Query<Team> q = session.createQuery(query);
 			teamList = q.getResultList();
-			System.out.println("Team Lead list Object : " + teamList);
 			return (List<Team>) teamList;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -115,7 +113,6 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("memberRoleId"), 1));
 			Query<Team> q = session.createQuery(query);
 			teamManager = q.getSingleResult();
-			System.out.println(teamManager.getMemberName());
 			return teamManager;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -170,6 +167,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 			teamLeadAssignment.setDeadline(deadLine);
 			teamLeadAssignment.setStatus("Pending");
 			session.save(teamLeadAssignment);
+			log.debug("Project Assignment Process Completed !!");
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -198,6 +196,7 @@ public class TeamInfoManager implements ITeamInfoManager {
 			Transaction transaction = session.beginTransaction();
 			session.createQuery(update).executeUpdate();
 			transaction.commit();
+			log.debug("Project Status Updated !!");
 			return true;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -224,7 +223,6 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("projectID"), id));
 			Query<Team> q = session.createQuery(query);
 			teamList = q.getResultList();
-			System.out.println("Team Lead list Object : " + teamList);
 			return (List<Team>) teamList;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -281,20 +279,8 @@ public class TeamInfoManager implements ITeamInfoManager {
 			query.select(root).where(builder.equal(root.get("userId"), userId));
 			Query<Team> q = session.createQuery(query);
 			projectsList = q.getResultList();
-			/*
-			 * for (int i = 0; i < projectsList.size(); i++) { Team team =
-			 * projectsList.get(i); System.out.println("Project Id " + team.getProjectId() +
-			 * " Member Name " + team.getMemberName()); CriteriaQuery<Projects> pQuery =
-			 * builder.createQuery(Projects.class); Root<Projects> pRoot =
-			 * pQuery.from(Projects.class);
-			 * pQuery.select(pRoot).where(builder.equal(pRoot.get("projectId"),
-			 * team.getProjectId())); Query<Projects> pQ = session.createQuery(pQuery);
-			 * projects = pQ.getResultList(); }
-			 */
-
 			for (Team team : projectsList) {
 				if (team != null) {
-					System.out.println("Project Id " + team.getProjectId() + " Member Name " + team.getMemberName());
 					CriteriaQuery<Projects> pQuery = builder.createQuery(Projects.class);
 					Root<Projects> pRoot = pQuery.from(Projects.class);
 					pQuery.select(pRoot).where(builder.equal(pRoot.get("projectId"), team.getProjectId()));

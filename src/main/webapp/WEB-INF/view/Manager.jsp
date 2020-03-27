@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -33,7 +35,8 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 		<h1>Manager</h1>
 		<h2>${message}</h2>
 		<form method="post" action="logout">
-			<input type="submit" value="LOGOUT">
+			<input type="hidden" name="userId" value="${userDetails.id}" />
+			<input type="submit" value="LOGOUT" class="btnAssign">
 		</form>
 		<form method="post" action="assignProject">
 			<table border="0">
@@ -62,19 +65,22 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 				</tr>
 				<tr>
 					<td>DeadLine</td>
-					<td><input type="text" name="deadlineDate" id="datepicker" class="txtBox"></td>
+					<td><input type="text" name="deadlineDate" id="datepicker"
+						class="txtBox"></td>
 				</tr>
 
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
-
-				value="Assign" class="btnAssign" /></td>
+					<td colspan="2" align="center"><input type="hidden"
+						name="userId" value="${userDetails.userName}" /><input
+						type="submit" value="Assign" class="btnAssign" /></td>
 				</tr>
 			</table>
 		</form>
 		<div class="row">
-		<div class="col-md-6">
-		<h2 align="center"><font color="black">Add New Project</font></h2>
+			<div class="col-md-6">
+				<h2 align="center">
+					<font color="black">Add New Project</font>
+				</h2>
 				<form method="post" action="addProject">
 					<table border="1" cellpadding="30%" align="center"
 						bordercolor="blue">
@@ -88,8 +94,10 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 						</tr>
 
 						<tr>
-						<td colspan="2" align="center"><input type="submit" class="txtBox"
-								class="txtBox" value="Add New Project" /></td>
+							<td colspan="2" align="center"><input type="hidden"
+								name="userId" value="${userDetails.userName}" /><input
+								type="submit" class="txtBox" class="btnAssign"
+								value="Add New Project" /></td>
 						</tr>
 					</table>
 				</form>
@@ -110,7 +118,9 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 							<td><input type="email" name="email"></td>
 						</tr>
 						<tr>
-							<td colspan="2" align="center"><input type="submit"	value="Add New Team Lead" class="txtBox"/></td>
+							<td colspan="2" align="center"><input type="hidden"
+								name="userId" value="${userDetails.userName}" /> <input
+								type="submit" value="Add New Team Lead" class="txtBox" /></td>
 
 						</tr>
 					</table>
@@ -119,7 +129,9 @@ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6J
 			</div>
 		</div>
 
-		<h2 align="center"><font color="black"> Project List </font></h2>
+		<h2 align="center">
+			<font color="black"> Project List </font>
+		</h2>
 		<table border="1" cellpadding="30%" align="center" bordercolor="blue">
 			<tr>
 				<td colspan="2"><font color="black"> Project ID </font></td>

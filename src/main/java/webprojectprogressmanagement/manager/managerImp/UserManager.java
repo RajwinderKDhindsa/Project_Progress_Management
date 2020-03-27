@@ -86,8 +86,10 @@ public class UserManager implements IUserManager {
 			String password = generatePassword(20);
 			teamLead.setPassword(password);
 			session.save(teamLead);
+			log.debug("Adding New Team Lead Process Completed !!");
 			// send email to person with password
 			emailService.sendPasswordEmail(email, teamLeadName, password);
+			log.debug("Email Notification Sent !!");
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -120,7 +122,6 @@ public class UserManager implements IUserManager {
 			query.select(root).where(builder.equal(root.get("userName"), email));
 			Query<User> q = session.createQuery(query);
 			user = q.getSingleResult();
-			System.out.println("****************************************************************" + user.getUserName());
 			return user;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
@@ -136,7 +137,7 @@ public class UserManager implements IUserManager {
 	}
 
 	@Override
-	public void addNewTeamLead(String name, String email, int roleId) {
+	public void addNewTeamMember(String name, String email, int roleId) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -148,7 +149,9 @@ public class UserManager implements IUserManager {
 			// send email to person about with password
 			teamLead.setPassword(password);
 			session.save(teamLead);
+			log.debug("Adding New Team Member Process Completed !!");
 			emailService.sendPasswordEmail(email, name, password);
+			log.debug("Password sent in email to Team Member !!");
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();

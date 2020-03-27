@@ -16,9 +16,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import webprojectprogressmanagement.manager.ISubTaskManager;
-import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.SubTasks;
-import webprojectprogressmanagement.models.Team;
 import webprojectprogressmanagement.utils.HibernateUtil;
 
 @Repository
@@ -50,6 +48,7 @@ public class SubTaskManager implements ISubTaskManager {
 			subTask.setTaskName(taskName);
 			subTask.setTaskDesc(taskDesc);			
 			session.save(subTask);
+			log.debug("Assigned Task to Team Member Completed !!");
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -77,6 +76,7 @@ public class SubTaskManager implements ISubTaskManager {
 			Transaction transaction = session.beginTransaction();
 			session.createQuery(update).executeUpdate();
 			transaction.commit();
+			log.debug("Task status updated to "+decision+" !!");
 			return true;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {

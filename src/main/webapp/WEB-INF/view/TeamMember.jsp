@@ -9,7 +9,8 @@
 		<h1>Team Member</h1>
 		<h2>${message}</h2>
 		<form method="post" action="logout">
-			<input type="submit" value="LOGOUT">
+			<input type="hidden" name="userId" value="${userDetails.id}" />
+			<input type="submit" value="LOGOUT" class="btnAssign">
 		</form>
 		<h1 align="center">
 			<font color="black">Team member details</font>
@@ -52,9 +53,11 @@
 							<form method="post" action="acceptTask">
 								Yes: <input type="radio" name="taskDecision" value="Accepted">
 								NO: <input type="radio" name="taskDecision" value="Rejected">
-								<input type="hidden" name="userDetails"
+								<input type="hidden" name="userId"
+									value="${userDetails.userName}" /> <input type="hidden"
+									name="userDetails"
 									value="${userDetails.id},${userDetails.name},${userDetails.userName}">
-								<input type="submit" value="Accept/Reject" />
+								<input type="submit" value="Accept/Reject"  class="btn"/>
 							</form>
 						</td>
 					</c:if>
@@ -66,3 +69,31 @@
 </body>
 
 </html>
+<style type="text/css">
+.txtBox {
+	width: 80%;
+	height: 28px;
+	border-color: blue;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.btnAssign {
+	width: 35%;
+	height: 28px;
+	border-color: blue;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+.btn {
+	width: 55%;
+	height: 28px;
+	border-color: blue;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.background {
+	background-color: rgba(0, 123, 255, 0.17);
+}
+</style>

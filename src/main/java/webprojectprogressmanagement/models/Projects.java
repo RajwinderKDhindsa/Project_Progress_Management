@@ -27,12 +27,6 @@ public class Projects {
 	@Column(name = "status")
 	private String projectStatus;
 
-	/*
-	 * @Column(name = "teamId") private int teamId;
-	 * 
-	 * @Column(name = "deadline") private Date deadline;
-	 */
-
 	public Projects() {
 
 	}
@@ -44,9 +38,6 @@ public class Projects {
 		this.projectName = projectName;
 		this.projectDesc = projectDesc;
 		this.projectStatus = projectStatus;
-		/*
-		 * this.teamId = teamId; this.deadline = deadline;
-		 */
 	}
 
 	public String getProjectStatus() {
@@ -72,16 +63,6 @@ public class Projects {
 	public void setProjectDesc(String projectDesc) {
 		this.projectDesc = projectDesc;
 	}
-
-	/*
-	 * public int getTeamId() { return teamId; }
-	 * 
-	 * public void setTeamId(int teamId) { this.teamId = teamId; }
-	 * 
-	 * public Date getDeadline() { return deadline; }
-	 * 
-	 * public void setDeadline(Date deadline) { this.deadline = deadline; }
-	 */
 
 	public String getProjectName() {
 		return projectName;

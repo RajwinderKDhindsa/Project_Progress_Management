@@ -101,6 +101,7 @@ public class ProjectInfoManager implements IProjectInfoManager {
 			newProject.setProjectName(projectName);
 			newProject.setProjectStatus("Pending");
 			session.save(newProject);
+			log.debug("Adding New Project Begin Completed !!");
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {
 				session.getTransaction().rollback();
@@ -128,6 +129,7 @@ public class ProjectInfoManager implements IProjectInfoManager {
 			Transaction transaction = session.beginTransaction();
 			session.createQuery(update).executeUpdate();
 			transaction.commit();
+			log.debug("Project Status updated to "+decision+"!");
 			return true;
 		} catch (Exception e) {
 			if (session.getTransaction().isActive()) {

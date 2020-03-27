@@ -6,5 +6,5 @@ import webprojectprogressmanagement.models.Role;
 
 public interface IRoleInfoManager {
 	public List < Role > getRoles();
-		
+	
 }

@@ -10,7 +10,7 @@ public interface IUserManager {
 	public List < User > getUsers();
 	void addNewTeamLead(String teamLeadName, String email);
 	User getUserDetails(String email);
-	void addNewTeamLead(String name, String email, int roleId);
+	void addNewTeamMember(String name, String email, int roleId);
 	List<User> getTeamDetails(int roleID);
 
 }

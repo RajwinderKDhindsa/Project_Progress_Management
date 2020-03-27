@@ -8,7 +8,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import webprojectprogressmanagement.models.Issues;
 import webprojectprogressmanagement.models.Login;
 import webprojectprogressmanagement.models.Projects;
 import webprojectprogressmanagement.models.Role;
@@ -43,7 +42,6 @@ public class HibernateUtil {
 				configuration.addAnnotatedClass(Projects.class);
 				configuration.addAnnotatedClass(SubTasks.class);
 				configuration.addAnnotatedClass(Login.class);
-				configuration.addAnnotatedClass(Issues.class);
 				serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties())
 						.build();
 				sessionFactory = configuration.buildSessionFactory(serviceRegistry);
